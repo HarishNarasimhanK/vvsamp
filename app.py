@@ -180,9 +180,9 @@ def rag():
             pickle.dump(st.session_state.rag_messages, f)
 
 
-def manage_chat_history(messages):
-    if len(messages) > 10:
-        messages = messages[-10:]
+# def manage_chat_history(messages):
+#     if len(messages) > 10:
+#         messages = messages[-10:]
 
 def qna_chatbot():
     selected_language = "en"
@@ -215,9 +215,11 @@ def qna_chatbot():
             "\n\nIf a user asks a general knowledge question, a personal query, or anything outside Indian law, you must APOLOGIZE and politely decline the request and provide no response on that topic. "
             f"The past messages can be in Whatever language but while answering the current prompt, You must provide the answers in the requested language: {SUPPORTED_LANGUAGES[language]}."
         )
-        messages1 = []
-        messages1.append({"role": "user", "content": f"current prompt : {user_input}"})
-        messages1 = messages + messages1 
+        
+        messages1 = [{"role": "system", "content": system_prompt}]
+        messages1.extend(messages)  # Maintain context
+        messages1.append({"role": "user", "content": user_input})
+
 
         response = client.chat.completions.create(
             model="databricks-meta-llama-3-3-70b-instruct",
@@ -264,7 +266,7 @@ def qna_chatbot():
             logname = "uchat_history.pkl"
         with open(logname, 'wb') as f:
             pickle.dump(messages, f)
-        manage_chat_history(messages)
+        #manage_chat_history(messages)
 
 
 def document_summarizer():
