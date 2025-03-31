@@ -264,7 +264,7 @@ def qna_chatbot():
             logname = "uchat_history.pkl"
         with open(logname, 'wb') as f:
             pickle.dump(messages, f)
-        #manage_chat_history()
+        manage_chat_history()
 
 
 def document_summarizer():
