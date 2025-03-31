@@ -180,9 +180,9 @@ def rag():
             pickle.dump(st.session_state.rag_messages, f)
 
 
-def manage_chat_history():
-    if len(st.session_state.messages) > 10:
-        st.session_state.messages = st.session_state.messages[-10:]
+def manage_chat_history(messages):
+    if len(messages) > 10:
+        messages = messages[-10:]
 
 def qna_chatbot():
     selected_language = "en"
@@ -264,7 +264,7 @@ def qna_chatbot():
             logname = "uchat_history.pkl"
         with open(logname, 'wb') as f:
             pickle.dump(messages, f)
-        manage_chat_history()
+        manage_chat_history(messages)
 
 
 def document_summarizer():
