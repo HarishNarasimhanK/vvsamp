@@ -34,3 +34,4 @@ tiktoken
 transformers
 bs4
 openai
+PyPDF2
